@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "keymap_swedish.h"
 #include "bootloader.h"
 #ifdef PROTOCOL_LUFA
   #include "lufa.h"
@@ -7,6 +8,9 @@
 #ifdef SSD1306OLED
   #include "ssd1306.h"
 #endif
+
+#define SE_LT   SE_LESS
+#define SE_GT   LSFT(SE_LESS)
 
 extern keymap_config_t keymap_config;
 
@@ -39,6 +43,20 @@ enum macro_keycodes {
   KC_SAMPLEMACRO,
 };
 
+//Swedish
+#define KC_SE_AA SE_AA
+#define KC_SE_AE SE_AE
+#define KC_SE_OSLH SE_OSLH
+#define KC_SE_PLUS SE_PLUS
+#define KC_SE_LESS SE_LESS
+#define KC_SE_MINS SE_MINS
+#define KC_SE_EURO SE_EURO
+#define KC_SE_TILD SE_TILD
+#define KC_SE_PND SE_PND
+#define KC_SE_DLR SE_DLR
+#define KC_SE_APOS SE_APOS
+
+
 #define KC______ KC_TRNS
 #define KC_XXXXX KC_NO
 #define KC_LOWER LOWER
@@ -60,9 +78,9 @@ enum macro_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,  BSPC,\
+        TAB,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P, SE_AA,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
+      CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,SE_OSLH,SE_AE,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
@@ -72,11 +90,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        TAB,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,  BSPC,\
+        ESC,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,SE_PLUS,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, MUTE,   VOLD,  VOLU,  PGUP,  PGDN,                   LEFT,  DOWN,    UP, RIGHT,  HOME,   END,\
+      CTLTB,    F1,    F2,    F3,    F4,    F5,                   PGUP,  HOME,    UP,   END,SE_TILD, BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,    F1,    F2,    F3,    F4,    F5,                     F6,    F7,    F8,    F9,   F10, XXXXX,\
+       LSFT,    F6,    F7,    F8,    F9,   F10,                   PGDN,  LEFT,  DOWN, RIGHT,   DEL,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
                               //`--------------------'  `--------------------'
@@ -84,11 +102,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  ASTR,  LPRN,  RPRN,  BSPC,\
+        ESC,  VOLU,    AT,SE_PND,SE_DLR, XXXXX,                   PIPE,  LCBR,  LBRC,  RBRC,  RCBR,  BSLS,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   MINS,   EQL,  LCBR,  RCBR,  PIPE,   GRV,\
+      CTLTB,  VOLD, XXXXX,SE_EURO,XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,  TILD,   GRV,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   UNDS,  PLUS,  LBRC,  RBRC,  BSLS,  TILD,\
+       LSFT,SE_LESS,XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,SE_APOS, RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
                               //`--------------------'  `--------------------'
