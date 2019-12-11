@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "keymap_swedish.h"
 
+#define SE_GRTR LSFT(SE_LESS)
+
 extern keymap_config_t keymap_config;
 
 
@@ -36,7 +38,8 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   RGBRST,
-  KC_RACL // right alt / colon
+  KC_RACL, // right alt / colon
+  KC_LACL // left alt / colon
 };
 
 //KC_MINS, KC_SLSH, KC_AT
@@ -48,21 +51,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+-------+------+-------+--------|
     KC_LCTL,  KC_A,  KC_S,  KC_D,  KC_F,  KC_G,                   KC_H,  KC_J,  KC_K,  KC_L, SE_OSLH,SE_AE,
   //|------+------+------+------+------+------|                |------+------+-------+------+-------+--------|
-    KC_LSFT,  KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,                   KC_N,  KC_M,KC_COMM,KC_DOT,KC_MINS,KC_RSFT,
+    KC_LSFT,  KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,                   KC_N,  KC_M,KC_COMM,KC_DOT,SE_MINS,KC_RSFT,
   //|------+------+------+------+------+------+------|  |------+------+------+-------+------+-------+--------|
-                               KC_LGUI,LOWER, KC_SPC,   RCTL_T(KC_ENT), RAISE, KC_RACL
+                               KC_LGUI,LOWER, KC_SPC,   RCTL_T(KC_ENT), RAISE, KC_LACL
                               //`--------------------'  `--------------------'
   ),
 
   [_LOWER] = LAYOUT(
   //,---------------------------------------------.                ,-----------------------------------------.
-      KC_ESC,   KC_1,   KC_2,   KC_3,   KC_4,   KC_5,                    KC_6,   KC_7,   KC_8,   KC_9,   KC_0,KC_PLUS,
+      KC_ESC,   KC_1,   KC_2,   KC_3,   KC_4,   KC_5,                    KC_6,   KC_7,   KC_8,   KC_9,   KC_0,SE_PLUS,
   //|-------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+------|
      KC_LCTL,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,                   KC_PGUP,KC_HOME,  KC_UP, KC_END,  KC_NO,KC_BSPC,
   //|-------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+------|
     KC_LSFT, KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10,                  KC_PGDN,KC_LEFT,KC_DOWN,KC_RIGHT,KC_INS, KC_DEL,
   //|-------+-------+-------+-------+-------+-------+------|  |------+-------+-------+-------+-------+-------+-------|
-                                    KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_RALT
+                                    KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_LALT
                                   //`--------------------'  `--------------------'
   ),
 
@@ -70,11 +73,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----------------------------------------------.                 ,---------------------------------------------.
       KC_ESC,KC_EXLM,SE_QUO2,KC_HASH,SE_BULT,KC_PERC,                 SE_AMPR,SE_SLSH,SE_LPRN,SE_RPRN,SE_EQL ,SE_QUES,
   //|-------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
-     KC_TAB ,KC_MUTE,  SE_AT,SE_EURO, SE_DLR,  KC_NO,                 SE_PIPE,SE_LCBR,SE_LBRC,SE_RBRC,SE_RCBR,SE_BSLS,
+     KC_LCTL,KC_MUTE,  SE_AT,SE_EURO, SE_DLR,  KC_NO,                 SE_PIPE,SE_LCBR,SE_LBRC,SE_RBRC,SE_RCBR,KC_BSPC,
   //|-------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
-     KC_LSFT,SE_LESS,SE_MINS,  KC_NO,  KC_NO,  KC_NO,                 KC_UNDS,SE_TILD,SE_ACUT,SE_APOS,SE_ASTR,KC_RSFT,
+     KC_LSFT,SE_LESS,SE_GRTR,  KC_NO,  KC_NO,  KC_NO,                 SE_BSLS,SE_TILD,SE_ACUT,SE_APOS,SE_ASTR,KC_DEL,
   //|-------+-------+-------+-------+-------+-------+------|  |------+-------+-------+-------+-------+-------+-------|
-                                KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_RALT
+                                KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_LALT
                               //`--------------------'  `--------------------'
   ),
 
@@ -86,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
     RGB_MOD,RGB_HUD,RGB_SAD,RGB_VAD,RGB_SPD,  KC_NO,           KC_SCROLLLOCK,KC_VOLD,KC_BRID,  KC_NO,  KC_NO,RGB_RMOD,
   //|------+-------+-------+-------+-------+-------+-------| |------+-------+-------+-------+-------+-------+-------|
-                                KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_RALT
+                                KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_LALT
                               //`--------------------'  `--------------------'
   )
 };
@@ -360,6 +363,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           register_code(KC_RALT);
         } else {
           unregister_code(KC_RALT);
+          if (timer_elapsed(my_colon_timer) < TAPPING_TERM) {
+            SEND_STRING(":"); // Change the character(s) to be sent on tap here
+          }
+        }
+        return false;
+    case KC_LACL:
+        if (record->event.pressed) {
+          my_colon_timer = timer_read();
+          register_code(KC_LALT);
+        } else {
+          unregister_code(KC_LALT);
           if (timer_elapsed(my_colon_timer) < TAPPING_TERM) {
             SEND_STRING(":"); // Change the character(s) to be sent on tap here
           }
