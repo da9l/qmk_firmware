@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "keymap_swedish.h"
 
-#define SE_GRTR LSFT(SE_LESS)
+//#define SE_GRTR LSFT(SE_LESS)
 
 extern keymap_config_t keymap_config;
 
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+-------+------+-------+--------|
     KC_LSFT,  KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,                   KC_N,  KC_M,KC_COMM,KC_DOT,SE_MINS,KC_RSFT,
   //|------+------+------+------+------+------+------|  |------+------+------+-------+------+-------+--------|
-                               KC_LGUI,LOWER, KC_SPC,   RCTL_T(KC_ENT), RAISE, KC_LACL
+                               KC_LGUI,LOWER, KC_SPC,   RCTL_T(KC_ENT), RAISE, KC_LALT
                               //`--------------------'  `--------------------'
   ),
 
@@ -75,17 +75,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
      KC_LCTL,KC_MUTE,  SE_AT,SE_EURO, SE_DLR,  KC_NO,                 SE_PIPE,SE_LCBR,SE_LBRC,SE_RBRC,SE_RCBR,KC_BSPC,
   //|-------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
-     KC_LSFT,SE_LESS,SE_GRTR,  KC_NO,  KC_NO,  KC_NO,                 SE_BSLS,SE_TILD,SE_ACUT,SE_APOS,SE_ASTR,KC_DEL,
+     KC_LSFT,SE_LESS,SE_GRTR,  KC_NO,  KC_NO,  KC_NO,                 SE_BSLS,SE_DIAE,SE_ACUT,SE_APOS,SE_ASTR,KC_DEL,
   //|-------+-------+-------+-------+-------+-------+------|  |------+-------+-------+-------+-------+-------+-------|
-                                KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_LALT
+                                KC_LGUI, LOWER,KC_SPC,   KC_ENT, RAISE,KC_ALGR
                               //`--------------------'  `--------------------'
   ),
 
   [_ADJUST] = LAYOUT(
   //,----------------------------------------------.                ,----------------------------------------------.
-      RESET, RGBRST,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                 KC_NO  ,KC_MUTE,  KC_NO,  KC_NO,KC_PSCR, KC_NO,
+      RESET, RGBRST,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                 KC_NO  ,KC_MUTE,KC_MPRV,KC_MPLY,KC_MNXT,KC_PSCR,
   //|------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
-    RGB_TOG,RGB_HUI,RGB_SAI,RGB_VAI,RGB_SPI,  KC_NO,                KC_PAUSE,KC_VOLU,KC_BRIU,  KC_NO,  KC_NO, KC_NO,
+    RGB_TOG,RGB_HUI,RGB_SAI,RGB_VAI,RGB_SPI,  KC_NO,                KC_PAUSE,KC_VOLU,KC_BRIU,KC_MSTP,  KC_NO, KC_NO,
   //|------+-------+-------+-------+-------+-------|                |-------+-------+-------+-------+-------+-------|
     RGB_MOD,RGB_HUD,RGB_SAD,RGB_VAD,RGB_SPD,  KC_NO,           KC_SCROLLLOCK,KC_VOLD,KC_BRID,  KC_NO,  KC_NO,RGB_RMOD,
   //|------+-------+-------+-------+-------+-------+-------| |------+-------+-------+-------+-------+-------+-------|
